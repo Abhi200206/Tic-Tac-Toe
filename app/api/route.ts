@@ -1,12 +1,27 @@
 import { NextResponse } from "next/server";
-let id=0;
-export function GET()
-{
-    ++id;
-    let bool=true;
-    if(id%2==0)
-    {
-        bool=false;
+let id = 0;
+
+// Maintain active rooms list
+let activeRooms: { [roomID: string]: { id: number; bool: boolean } } = {};
+
+export function GET(req: Request) {
+    const { searchParams } = new URL(req.url);
+    const roomID = searchParams.get("roomID");
+
+    if (roomID) {
+        // Validate room ID
+        if (activeRooms[roomID]) {
+            return NextResponse.json({ ...activeRooms[roomID], roomID,id:++id});
+        } else {
+            return NextResponse.json({ error: "Invalid room ID" });
+        }
+    } else {
+        // Create new room if no roomID is provided
+        ++id;
+        const bool = id % 2 === 0 ? false : true;
+        const newRoomID = Math.floor(Math.random() * 10000).toString();
+
+        activeRooms[newRoomID] = { id, bool };
+        return NextResponse.json({ id, bool, roomID: newRoomID });
     }
-    return NextResponse.json({id,bool});
 }

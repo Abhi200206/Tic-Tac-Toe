@@ -9,7 +9,16 @@ export default function Home() {
   async function Generate()
   {
     const id=await axios.get('http://localhost:3000/api') ;
-    router.push(`/game?id=${id.data.id}&bool=${id.data.bool}`);
+    router.push(`/game?id=${id.data.id}&bool=${id.data.bool}&roomID=${id.data.roomID}`);
+  }
+  async function gen(roomID: any) {
+    const response = await axios.get(`http://localhost:3000/api?roomID=${roomID}`);
+    console.log(JSON.stringify(response.data));
+    if (response.data.error) {
+      alert("Invalid room ID. Please enter a valid code.");
+    } else {
+      router.push(`/game?id=${response.data.id}&bool=${response.data.bool}&roomID=${roomID}`);
+    }
   }
   return (
     <div className="flex justify-center items-center h-screen">
@@ -22,7 +31,9 @@ export default function Home() {
           <input onChange={(e:any)=>{
             setCode(e.target.value);
           }}   className="rounded border-[1px] border-black p-1 my-2" type="text" placeholder="Enter the code" />
-          <div onClick={Generate} className="cursor-pointer border-[1px] border-black text-center p-2 rounded bg-black text-white hover:text-black hover:bg-white "><p>Join</p></div>
+          <div onClick={()=>{
+            gen(code)
+          }} className="cursor-pointer border-[1px] border-black text-center p-2 rounded bg-black text-white hover:text-black hover:bg-white "><p>Join</p></div>
         </div>
       </div>
     </div>
