@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 let id = 0;
 
-// Maintain active rooms list
 let activeRooms: { [roomID: string]: { id: number; bool: boolean } } = {};
 
 export function GET(req: Request) {
@@ -9,7 +8,6 @@ export function GET(req: Request) {
     const roomID = searchParams.get("roomID");
 
     if (roomID) {
-        // Validate room ID
         if (activeRooms[roomID]) {
             return NextResponse.json({ ...activeRooms[roomID], roomID,id:++id});
         } else {
