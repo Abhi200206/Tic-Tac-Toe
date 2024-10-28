@@ -157,7 +157,7 @@ export default function Game() {
 
             <div className="flex justify-center items-center h-screen">
                 <div>
-                    <Gamecard cb={makeMove} state={gamestate} char={'Player'} />
+                    <Gamecard cb={makeMove} state={gamestate} />
                 </div>
             </div>
         </div>
