@@ -4,14 +4,14 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 export default function Home() {
-  const [code, setCode] = useState();
+  const [code, setCode] = useState<string>("");
   const router=useRouter();
   async function Generate()
   {
     const id=await axios.get('http://localhost:3000/api') ;
     router.push(`/game?id=${id.data.id}&bool=${id.data.bool}&roomID=${id.data.roomID}`);
   }
-  async function gen(roomID: any) {
+  async function gen(roomID: string) {
     const response = await axios.get(`http://localhost:3000/api?roomID=${roomID}`);
     console.log(JSON.stringify(response.data));
     if (response.data.error) {
@@ -28,7 +28,7 @@ export default function Home() {
           <p>OR</p>
         </div>
         <div >
-          <input onChange={(e:any)=>{
+          <input onChange={(e:React.ChangeEvent<HTMLInputElement>)=>{
             setCode(e.target.value);
           }}   className="rounded border-[1px] border-black p-1 my-2" type="text" placeholder="Enter the code" />
           <div onClick={()=>{

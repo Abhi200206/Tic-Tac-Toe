@@ -10,7 +10,7 @@ export default function Game() {
     const params = useSearchParams();
     const [socket, setSocket] = useState<WebSocket | null>(null);
     const [gamestate, setGamestate] = useState(['click', 'click', 'click', 'click', 'click', 'click', 'click', 'click', 'click']);
-    const bool: any = params.get('bool') === 'true';
+    const bool: boolean = params.get('bool') === 'true';
     const [currentPlayer, setCurrentPlayer] = useState(bool ? 'X' : 'O');
     const roomID: string | null = params.get('roomID');
     const router = useRouter();
@@ -27,7 +27,7 @@ export default function Game() {
             [2, 4, 6],
         ];
 
-        for (let condition of winConditions) {
+        for (const condition of winConditions) {
             const [a, b, c] = condition;
             if (gamestate[a] !== 'click' && gamestate[a] === gamestate[b] && gamestate[b] === gamestate[c]) {
                 alert(`${gamestate[a]} won the Game`);
@@ -53,20 +53,25 @@ export default function Game() {
                 gameState: newState,
                 nextPlayer: currentPlayer === 'X' ? 'O' : 'X', // Send the next player
             });
-    
+
             // Switch the current player
             setCurrentPlayer(currentPlayer === 'X' ? 'O' : 'X');
         }
     }
-
-    function sendMessage(data: any) {
+    interface MessageData {
+        action: string;
+        roomID?: string | null;
+        gameState?: string[];
+        nextPlayer?: string;
+    }
+    function sendMessage(data: MessageData) {
         if (socket) {
             socket.send(JSON.stringify(data));
         }
     }
     useEffect(() => {
         checkWin();
-    }, [gamestate]);
+    }, [gamestate, checkWin]);
 
     useEffect(() => {
         const newSocket = new WebSocket('ws://localhost:8080');
@@ -95,7 +100,9 @@ export default function Game() {
             } catch (error) {
                 console.log('Received non-JSON message:', message.data);
                 setMessage(message.data);
+                console.error('Error parsing message:', error); // Use error here
             }
+
         };
 
         newSocket.onclose = () => {
@@ -107,7 +114,7 @@ export default function Game() {
         return () => {
             newSocket.close();
         };
-    }, [roomID]);
+    }, [roomID, sendMessage]);
 
     return (
         <div>
@@ -144,7 +151,7 @@ export default function Game() {
 
                                 // Navigate back to the main screen
                                 router.push('/');
-                                alert(`${bool?'X':'O'} left the game`);
+                                alert(`${bool ? 'X' : 'O'} left the game`);
                             }}
                             className="px-2 font-serif rounded text-white border-[1px] cursor-pointer hover:text-black hover:bg-white bg-black p-2"
                         >
