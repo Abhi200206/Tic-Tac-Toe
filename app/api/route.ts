@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 let id = 0;
 
-let activeRooms: { [roomID: string]: { id: number; bool: boolean } } = {};
+const activeRooms: { [roomID: string]: { id: number; bool: boolean } } = {};
 
 export function GET(req: Request) {
     const { searchParams } = new URL(req.url);

@@ -1,6 +1,6 @@
 import Gamecomp from "./Gamecomp";
 
-export default function Gamecard({ state, char, cb }: { state: any, char: string, cb: any }) {
+export default function Gamecard({ state, char, cb }: { state: string [], char: string, cb: (x:number)=>void }) {
     return (
         <div>
             <div className="flex">

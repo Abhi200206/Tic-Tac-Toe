@@ -13,7 +13,7 @@ export default function Game() {
     const bool: any = params.get('bool') === 'true';
     const [currentPlayer, setCurrentPlayer] = useState(bool ? 'X' : 'O');
     const roomID: string | null = params.get('roomID');
-    let router = useRouter();
+    const router = useRouter();
     async function checkWin() {
         // Win conditions for Tic-Tac-Toe
         const winConditions = [

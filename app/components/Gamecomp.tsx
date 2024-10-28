@@ -1,4 +1,4 @@
-export default function Gamecomp({ char, val, num, cb, state }: { char: any, val: any, num: any, cb: any, state: any }) {
+export default function Gamecomp({ char, val, num, cb, state }: { char: string, val: string, num: number, cb: (x:number)=>void, state: string [] }) {
     function handleClick() {
         if (state[num] == 'click') { 
             cb(num);  
