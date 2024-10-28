@@ -26,7 +26,7 @@ export default function Game() {
             [0, 4, 8],
             [2, 4, 6],
         ];
-
+        console.log(message);
         for (const condition of winConditions) {
             const [a, b, c] = condition;
             if (gamestate[a] !== 'click' && gamestate[a] === gamestate[b] && gamestate[b] === gamestate[c]) {
