@@ -32,10 +32,9 @@ export const Create=()=>{
     }
     return (
         <div>
-            share this code to code with your friends to join the game
-            <br />
-            
-            <p>code: {code}</p> <br />
+            <div className="text-center font-bold font-sans mb-6">
+                <p>Please Share the below code with your friend to start the Game.</p>
+            </div>
             <Game code={code} playerid={playerid}/>
 
         </div>

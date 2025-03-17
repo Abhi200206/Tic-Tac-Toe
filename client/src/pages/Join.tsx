@@ -1,4 +1,4 @@
-import { useSearchParams } from "react-router-dom"
+import { useSearchParams } from "react-router-dom";
 import { Game } from "./Game";
 
 export const Join=()=>{
@@ -8,7 +8,6 @@ export const Join=()=>{
     return (
         
         <div>
-            <p>code: {code} {playerid}</p>
             <Game code={code} playerid={playerid} />
         </div>
     )
